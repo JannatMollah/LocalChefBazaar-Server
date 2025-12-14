@@ -8,6 +8,7 @@ const authRoutes = require("./routes/auth.route");
 const mealsRoutes = require("./routes/meals.route");
 const reviewsRoutes = require("./routes/reviews.route");
 const favoritesRoutes = require("./routes/favorites.route");
+const ordersRoutes = require("./routes/orders.route");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/auth", authRoutes);
 app.use("/meals", mealsRoutes);
 app.use("/reviews", reviewsRoutes);
 app.use("/favorites", favoritesRoutes);
+app.use("/orders", ordersRoutes);
 
 
 
