@@ -7,6 +7,7 @@ const userRoutes = require("./routes/users.route");
 const authRoutes = require("./routes/auth.route");
 const mealsRoutes = require("./routes/meals.route");
 const reviewsRoutes = require("./routes/reviews.route");
+const favoritesRoutes = require("./routes/favorites.route");
 
 const app = express();
 
@@ -17,11 +18,13 @@ app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/meals", mealsRoutes);
 app.use("/reviews", reviewsRoutes);
+app.use("/favorites", favoritesRoutes);
+
+
 
 app.get("/", (req, res) => {
   res.send("LocalChefBazaar Server Running");
 });
-
 
 //Example Protected Route (Test)
 const verifyJWT = require("./middleware/verifyJWT");
