@@ -1,0 +1,32 @@
+{
+  "name": "localchefbazaar-server",
+  "version": "1.0.0",
+  "description": "- 🔗 **Live URL (Netlify):** https://jannatpha11.netlify.app\r - **GitHub Client Repository:** https://github.com/JannatMollah/LocalChefBazaar-Client\r - **GitHub Server Repository:** https://github.com/JannatMollah/LocalChefBazaar-Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JannatMollah/LocalChefBazaar-Server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JannatMollah/LocalChefBazaar-Server/issues"
+  },
+  "homepage": "https://github.com/JannatMollah/LocalChefBazaar-Server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
