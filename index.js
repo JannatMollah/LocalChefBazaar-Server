@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const { connectDB } = require("./config/db");
 const userRoutes = require("./routes/users.route");
+const authRoutes = require("./routes/auth.route");
 
 const app = express();
 
@@ -11,10 +12,24 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/users", userRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {
   res.send("LocalChefBazaar Server Running");
 });
+
+
+//Example Protected Route (Test)
+const verifyJWT = require("./middleware/verifyJWT");
+
+app.get("/protected", verifyJWT, (req, res) => {
+  res.send({
+    message: "Protected data access granted",
+    user: req.user,
+  });
+});
+
+
 
 const PORT = process.env.PORT || 5000;
 

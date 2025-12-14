@@ -7,7 +7,7 @@ async function connectDB(uri) {
   client = new MongoClient(uri);
   await client.connect();
   db = client.db("localChefBazaar");
-  console.log("✅ MongoDB Connected");
+  console.log("MongoDB Connected");
 }
 
 function getDB() {
