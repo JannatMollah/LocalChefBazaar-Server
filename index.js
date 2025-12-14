@@ -10,6 +10,9 @@ const reviewsRoutes = require("./routes/reviews.route");
 const favoritesRoutes = require("./routes/favorites.route");
 const ordersRoutes = require("./routes/orders.route");
 const requestRoutes = require("./routes/requests.route");
+const paymentRoutes = require("./routes/payments.route");
+const statsRoutes = require("./routes/stats.route");
+
 
 const app = express();
 
@@ -23,6 +26,9 @@ app.use("/reviews", reviewsRoutes);
 app.use("/favorites", favoritesRoutes);
 app.use("/orders", ordersRoutes);
 app.use("/requests", requestRoutes);
+app.use("/payments", paymentRoutes);
+app.use("/stats", statsRoutes);
+
 
 
 app.get("/", (req, res) => {
