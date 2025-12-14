@@ -9,6 +9,7 @@ const mealsRoutes = require("./routes/meals.route");
 const reviewsRoutes = require("./routes/reviews.route");
 const favoritesRoutes = require("./routes/favorites.route");
 const ordersRoutes = require("./routes/orders.route");
+const requestRoutes = require("./routes/requests.route");
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use("/meals", mealsRoutes);
 app.use("/reviews", reviewsRoutes);
 app.use("/favorites", favoritesRoutes);
 app.use("/orders", ordersRoutes);
-
+app.use("/requests", requestRoutes);
 
 
 app.get("/", (req, res) => {
