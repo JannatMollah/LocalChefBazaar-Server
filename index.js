@@ -5,6 +5,8 @@ require("dotenv").config();
 const { connectDB } = require("./config/db");
 const userRoutes = require("./routes/users.route");
 const authRoutes = require("./routes/auth.route");
+const mealsRoutes = require("./routes/meals.route");
+const reviewsRoutes = require("./routes/reviews.route");
 
 const app = express();
 
@@ -13,6 +15,8 @@ app.use(express.json());
 
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
+app.use("/meals", mealsRoutes);
+app.use("/reviews", reviewsRoutes);
 
 app.get("/", (req, res) => {
   res.send("LocalChefBazaar Server Running");
