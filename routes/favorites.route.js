@@ -34,6 +34,26 @@ router.post("/", verifyJWT, verifyActiveUser, async (req, res) => {
   res.send(result);
 });
 
+// CHECK IF ALREADY IN FAVORITES
+router.get("/check", verifyJWT, verifyActiveUser, async (req, res) => {
+  const db = getDB();
+  const { mealId, userEmail } = req.query;
+
+  if (!mealId || !userEmail) {
+    return res.status(400).send({ message: "Missing mealId or userEmail" });
+  }
+
+  const favorite = await db.collection("favorites").findOne({
+    userEmail: userEmail,
+    mealId: mealId,
+  });
+
+  res.send({
+    exists: !!favorite,
+    favoriteId: favorite?._id,
+  });
+});
+
 // GET MY FAVORITES
 router.get("/", verifyJWT, verifyActiveUser, async (req, res) => {
   const db = getDB();

@@ -4,6 +4,8 @@ const { ObjectId } = require("mongodb");
 
 const verifyJWT = require("../middleware/verifyJWT");
 const verifyActiveUser = require("../middleware/verifyActiveUser");
+const verifyChef = require("../middleware/verifyChef");
+
 const { getDB } = require("../config/db");
 
 // ADD REVIEW
@@ -92,6 +94,33 @@ router.delete("/:id", verifyJWT, verifyActiveUser, async (req, res) => {
     .deleteOne({ _id: new ObjectId(id) });
 
   res.send(result);
+});
+
+// GET CHEF REVIEWS
+router.get("/chef", verifyJWT, verifyActiveUser, verifyChef, async (req, res) => {
+  const db = getDB();
+  
+  try {
+    // Get chef's meals
+    const chefMeals = await db
+      .collection("meals")
+      .find({ userEmail: req.user.email })
+      .toArray();
+    
+    const mealIds = chefMeals.map(meal => meal._id);
+    
+    // Get reviews for chef's meals
+    const reviews = await db
+      .collection("reviews")
+      .find({ foodId: { $in: mealIds } })
+      .sort({ date: -1 })
+      .toArray();
+    
+    res.send(reviews);
+  } catch (error) {
+    console.error("Error fetching chef reviews:", error);
+    res.status(500).send({ message: "Failed to fetch chef reviews" });
+  }
 });
 
 module.exports = router;

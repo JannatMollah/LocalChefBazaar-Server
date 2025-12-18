@@ -12,6 +12,7 @@ const ordersRoutes = require("./routes/orders.route");
 const requestRoutes = require("./routes/requests.route");
 const paymentRoutes = require("./routes/payments.route");
 const statsRoutes = require("./routes/stats.route");
+const cartRoutes = require("./routes/cart.route");
 
 
 const app = express();
@@ -28,6 +29,8 @@ app.use("/orders", ordersRoutes);
 app.use("/requests", requestRoutes);
 app.use("/payments", paymentRoutes);
 app.use("/stats", statsRoutes);
+app.use("/cart", cartRoutes);
+app.use("/orders", ordersRoutes);
 
 
 

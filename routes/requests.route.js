@@ -99,4 +99,18 @@ router.patch(
   }
 );
 
+// GET MY PENDING REQUESTS
+router.get("/my-pending", verifyJWT, verifyActiveUser, async (req, res) => {
+  const db = getDB();
+  
+  const requests = await db.collection("requests")
+    .find({ 
+      userEmail: req.user.email,
+      requestStatus: "pending"
+    })
+    .toArray();
+  
+  res.send(requests);
+});
+
 module.exports = router;

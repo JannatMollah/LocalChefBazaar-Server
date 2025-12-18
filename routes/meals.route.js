@@ -68,4 +68,101 @@ router.get("/:id", async (req, res) => {
   res.send(meal);
 });
 
+// GET CHEF MEALS
+router.get("/chef/:chefId", async (req, res) => {
+  const db = getDB();
+  const chefId = req.params.chefId;
+
+  try {
+    const meals = await db
+      .collection("meals")
+      .find({ chefId })
+      .sort({ createdAt: -1 })
+      .toArray();
+
+    res.send(meals);
+  } catch (error) {
+    console.error("Error fetching chef meals:", error);
+    res.status(500).send({ message: "Failed to fetch chef meals" });
+  }
+});
+
+// UPDATE MEAL
+router.patch("/:id", verifyJWT, verifyActiveUser, verifyChef, async (req, res) => {
+  const db = getDB();
+  const id = req.params.id;
+  const updateData = req.body;
+
+  try {
+    const meal = await db
+      .collection("meals")
+      .findOne({ _id: new ObjectId(id) });
+
+    if (!meal) {
+      return res.status(404).send({ message: "Meal not found" });
+    }
+
+    // Verify chef owns this meal
+    if (meal.userEmail !== req.user.email) {
+      return res.status(403).send({ message: "Unauthorized" });
+    }
+
+    updateData.updatedAt = new Date();
+
+    const result = await db.collection("meals").updateOne(
+      { _id: new ObjectId(id) },
+      { $set: updateData }
+    );
+
+    res.send({
+      success: true,
+      message: "Meal updated successfully",
+      result
+    });
+  } catch (error) {
+    console.error("Update meal error:", error);
+    res.status(500).send({ 
+      success: false, 
+      message: "Failed to update meal" 
+    });
+  }
+});
+
+// DELETE MEAL
+router.delete("/:id", verifyJWT, verifyActiveUser, verifyChef, async (req, res) => {
+  const db = getDB();
+  const id = req.params.id;
+
+  try {
+    const meal = await db
+      .collection("meals")
+      .findOne({ _id: new ObjectId(id) });
+
+    if (!meal) {
+      return res.status(404).send({ message: "Meal not found" });
+    }
+
+    // Verify chef owns this meal
+    if (meal.userEmail !== req.user.email) {
+      return res.status(403).send({ message: "Unauthorized" });
+    }
+
+    const result = await db
+      .collection("meals")
+      .deleteOne({ _id: new ObjectId(id) });
+
+    res.send({
+      success: true,
+      message: "Meal deleted successfully",
+      result
+    });
+  } catch (error) {
+    console.error("Delete meal error:", error);
+    res.status(500).send({ 
+      success: false, 
+      message: "Failed to delete meal" 
+    });
+  }
+});
+
 module.exports = router;
