@@ -1,7 +1,7 @@
 const createUser = (user) => ({
   name: user.name,
   email: user.email,
-  image: user.image,
+  photoURL: user.image,
   address: user.address,
   role: "user",
   status: "active",

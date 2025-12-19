@@ -4,6 +4,7 @@ const { ObjectId } = require("mongodb");
 
 const verifyJWT = require("../middleware/verifyJWT");
 const verifyActiveUser = require("../middleware/verifyActiveUser");
+const verifyAdmin = require("../middleware/verifyAdmin");
 const { getDB } = require("../config/db");
 
 // PLACE ORDER (Cart থেকে বা Direct)
@@ -180,6 +181,18 @@ router.patch(
     );
 
     res.send(result);
+  }
+);
+
+router.get(
+  "/",
+  verifyJWT,
+  verifyActiveUser,
+  verifyAdmin,
+  async (req, res) => {
+    const db = getDB();
+    const requests = await db.collection("orders").find().toArray();
+    res.send(requests);
   }
 );
 
